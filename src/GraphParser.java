@@ -4,11 +4,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 class GraphParser {
-    public static DirectedGraph parseGraph(File file) throws IOException {
+    DirectedGraph graph;
+    public GraphParser(File file) throws IOException {
         // Create a new buffered reader to read the file
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line= reader.readLine();
-        DirectedGraph graph = new DirectedGraph(Integer.parseInt(line));
+        this.graph = new DirectedGraph(Integer.parseInt(line));
         while ((line = reader.readLine()) != null) {
             String[] tokens = line.split(" ");
             try {
@@ -19,6 +20,9 @@ class GraphParser {
             }
         }
         reader.close();
+    }
+
+    public DirectedGraph getGraph() {
         return graph;
     }
 }
