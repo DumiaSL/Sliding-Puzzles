@@ -1,4 +1,4 @@
-public class DirectedGraph {
+public class DirectedGraph implements Cloneable{
     private int numVertices;
     private boolean[][] adjMatrix;
 
@@ -41,5 +41,14 @@ public class DirectedGraph {
 
     public boolean[][] getAdjMatrix() {
         return adjMatrix;
+    }
+
+    @Override
+    public DirectedGraph clone() {
+        try {
+            return (DirectedGraph) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

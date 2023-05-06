@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-class GraphParser {
+public class GraphParser {
     DirectedGraph graph;
     public GraphParser(File file) throws IOException {
         // Create a new buffered reader to read the file

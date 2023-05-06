@@ -21,7 +21,7 @@ public class Main {
                 inputFiles.add(file);
             }
         }
-
+//        process_graph(inputFiles.get(7));
         // Shuffle the list of input files
         Collections.shuffle(inputFiles);
         for (File file: inputFiles) {
@@ -48,7 +48,7 @@ public class Main {
             }
 
             // Check if the graph is acyclic
-            if (AcyclicDetector.isGraphAcyclic(graphParser.getGraph())) {
+            if (AcyclicDetector.graphType(graphParser.getGraph())) {
                 System.out.println("Graph is acyclic");
             } else {
                 // If the graph is cyclic, print a message to the console and find a cycle

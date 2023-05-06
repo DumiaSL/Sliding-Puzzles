@@ -1,58 +1,64 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 class AcyclicDetector {
-    public static boolean isGraphAcyclic(DirectedGraph graph) {
+    public static boolean graphType(DirectedGraph graph) {
+        System.out.print("Sink Removed : ");
+        int sinkCount = 0;
         ArrayList<Integer> outDegree = new ArrayList<Integer>();
-        for (int u = 0; u < graph.getNumVertices(); u++) {
-            outDegree.add(graph.getOutDegree(u));
+        DirectedGraph copyGraph = graph.clone();
+
+        for (int u = 0; u < copyGraph.getNumVertices(); u++) {
+            outDegree.add(copyGraph.getOutDegree(u));
         }
 
-        boolean[][] copyMatrix = graph.getAdjMatrix().clone();
-
-        while (true) {
-            System.out.println(outDegree);
-            int sink = findSink(outDegree);
-            System.out.println(sink);
-
-            if (sink!=0){
-                if ((outDegree.get(sink) == 0)){
-                    // Remove edges from the sink and update outDegree array
-                    System.out.println(Arrays.toString(graph.getNeighbors(sink)));
-                    for (int index=0; index<graph.getNeighbors(sink).length;index++){
-                        int neighborValue = graph.getNeighbors(sink)[index]--;
-                        outDegree.set(index,neighborValue);
-                    }
-                // Mark sink as removed
-                outDegree.remove(sink);
-                }else {
-                    // Found a sink with no outgoing edges, graph is acyclic
-                    return true;
+        while (true){
+            for (int u = 0; u < copyGraph.getNumVertices(); u++) {
+                if (!(outDegree.get(u)==-1)){
+                    outDegree.set(u,copyGraph.getOutDegree(u));
                 }
-            }else {
-                // No sink found, graph is cyclic
-                return false;
+            }
+            int sink = findSink(outDegree);
+
+            boolean isAcyclic = true;
+            for (int degree: outDegree) {
+                if (degree != -1) {
+                    isAcyclic = false;
+                    break;
+                }
             }
 
+            if (isAcyclic) {
+                // Found a sink with no outgoing edges, graph is acyclic
+                if (sinkCount==0){
+                    System.out.println("No found !");
+                }else {
+                    System.out.println();
+                }
+                return true;
+            }
 
-
-
-
-//            if (sink == -1) {
-//                // No sink found, graph is cyclic
-//                return false;
-//            } else if (outDegree[sink] == 0) {
-//                // Found a sink with no outgoing edges, graph is acyclic
-//                return true;
-//            } else {
-//                // Remove edges from the sink and update outDegree array
-//                for (int v : graph.getNeighbors(sink)) {
-//                    outDegree[v]--;
-//                }
-//                // Mark sink as removed
-//                outDegree[sink] = -1;
-//            }
+            if (sink!=-1){
+                // Remove edges from the sink and update outDegree array
+                for (int v = 0; v < copyGraph.getNumVertices() ; v++) {
+                    // check if there is an edge from vertex u to vertex v
+                    if (copyGraph.getAdjMatrix()[v][sink]) {
+                        copyGraph.getAdjMatrix()[v][sink]=false;
+                    }
+                }
+                // Mark sink as removed
+                System.out.print(sink+1+ " ");
+                sinkCount++;
+                outDegree.set(sink,-1);
+            }else {
+                // No sink found, graph is cyclic
+                if (sinkCount==0){
+                    System.out.println("No found !");
+                }else {
+                    System.out.println();
+                }
+                return false;
+            }
         }
     }
 
@@ -99,9 +105,8 @@ class AcyclicDetector {
     }
 
     public static int findSink(ArrayList<Integer> outDegree) {
-        for (int u = 0; u < outDegree.size(); u++) {
+        for (int u = outDegree.size()-1; u>=0; u--) {
             if (outDegree.get(u) == 0) {
-                System.out.println("reaced "+u);
                 return u; // Found a sink
             }
         }
