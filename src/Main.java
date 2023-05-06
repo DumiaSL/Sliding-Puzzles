@@ -21,7 +21,7 @@ public class Main {
                 inputFiles.add(file);
             }
         }
-//        process_graph(inputFiles.get(7));
+
         // Shuffle the list of input files
         Collections.shuffle(inputFiles);
         for (File file: inputFiles) {

@@ -93,16 +93,22 @@ class AcyclicDetector {
                 }
             } else if (onStack[v]) {
                 // Cycle detected
+                int idx = cycle.indexOf(v);
                 cycle.add(v);
+                int[] cycleArr = cycle.subList(idx, cycle.size()).stream().mapToInt(i -> i).toArray();
+                cycle.clear();
+                for (int i : cycleArr) {
+                    cycle.add(i);
+                }
                 return true;
             }
         }
-
         cycle.remove(cycle.size() - 1);
         onStack[u] = false;
 
         return false;
     }
+
 
     public static int findSink(ArrayList<Integer> outDegree) {
         for (int u = outDegree.size()-1; u>=0; u--) {
