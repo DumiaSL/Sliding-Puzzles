@@ -53,7 +53,7 @@ public class Main {
             } else {
                 // If the graph is cyclic, print a message to the console and find a cycle
                 System.out.println("Graph is cyclic");
-                int[] cycle = AcyclicDetector.findCycle(graphParser.getGraph());
+                int[] cycle = AcyclicDetector.findCycleInGraph(graphParser.getGraph());
                 System.out.print("Cycle: ");
                 for (int i = 0; i < cycle.length; i++) {
                     System.out.print(cycle[i] + 1);

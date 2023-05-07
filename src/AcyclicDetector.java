@@ -1,3 +1,4 @@
+//import packages
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,8 @@ class AcyclicDetector {
                 // Remove edges from the sink and update outDegree array
                 for (int v = 0; v < copyGraph.getNumVertices() ; v++) {
                     // check if there is an edge from vertex u to vertex v
-                    if (copyGraph.getAdjMatrix()[v][sink]) {
-                        copyGraph.getAdjMatrix()[v][sink]=false;
+                    if (copyGraph.getGraphAdjMatrix()[v][sink]) {
+                        copyGraph.getGraphAdjMatrix()[v][sink]=false;
                     }
                 }
                 // Mark sink as removed
@@ -62,7 +63,7 @@ class AcyclicDetector {
         }
     }
 
-    public static int[] findCycle(DirectedGraph graph) {
+    public static int[] findCycleInGraph(DirectedGraph graph) {
         int numVertices = graph.getNumVertices();
         boolean[] visited = new boolean[numVertices];
         boolean[] onStack = new boolean[numVertices];
@@ -77,7 +78,6 @@ class AcyclicDetector {
                 return result;
             }
         }
-
         return null; // No cycle found
     }
 
@@ -86,7 +86,7 @@ class AcyclicDetector {
         onStack[u] = true;
         cycle.add(u);
 
-        for (int v : graph.getNeighbors(u)) {
+        for (int v : graph.getNeighborValues(u)) {
             if (!visited[v]) {
                 if (findCycleHelper(graph, v, visited, onStack, cycle)) {
                     return true;
@@ -108,7 +108,6 @@ class AcyclicDetector {
 
         return false;
     }
-
 
     public static int findSink(ArrayList<Integer> outDegree) {
         for (int u = outDegree.size()-1; u>=0; u--) {

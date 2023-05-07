@@ -11,22 +11,23 @@ public class DirectedGraph implements Cloneable{
         return numVertices;
     }
 
+    //Adding edge to matrix
     public void addEdge(int u, int v) {
         adjMatrix[u][v] = true;
     }
 
     public int getOutDegree(int u) {
-        int count = 0;
+        int numberOfOutDegrees = 0;
         for (int v = 0; v < numVertices; v++) {
             // check if there is an edge from vertex u to vertex v
             if (adjMatrix[u][v]) {
-                count++;
+                numberOfOutDegrees++;
             }
         }
-        return count; // return the out-degree of vertex u
+        return numberOfOutDegrees; // return the out-degree of vertex u
     }
 
-    public int[] getNeighbors(int u) {
+    public int[] getNeighborValues(int u) {
         int[] neighbors = new int[getOutDegree(u)];
         int index = 0;
         for (int v = 0; v < numVertices; v++) {
@@ -39,7 +40,7 @@ public class DirectedGraph implements Cloneable{
         return neighbors;
     }
 
-    public boolean[][] getAdjMatrix() {
+    public boolean[][] getGraphAdjMatrix() {
         return adjMatrix;
     }
 
