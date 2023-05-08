@@ -1,7 +1,4 @@
 
-//Maddumage Dumidu Thanushka Fernando
-// w1870557 / 20200515
-
 //import packages
 import java.io.BufferedReader;
 import java.io.File;
